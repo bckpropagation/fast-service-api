@@ -38,4 +38,3 @@ api.add_resource(Reviews, '/dishes/<int:dish_id>/reviews',
                           '/dishes/<int:dish_id>/reviews/',
 						  endpoint='reviews')
 
-print(f'[*] Registered resources: {len(api.resources)}')
