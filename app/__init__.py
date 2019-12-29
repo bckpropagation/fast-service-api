@@ -11,8 +11,9 @@ blueprint = Blueprint("api", __name__)
 api = Api(
 	blueprint,
 	version="1.0",
-	title="Fast service restaurants api",
-	description="Fast service web API"
+	title="Fast service API",
+	description="Fast service API",
+	catch_all_404s=True
 )
 
 

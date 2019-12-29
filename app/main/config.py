@@ -9,8 +9,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
+    # FLASK CONF
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = False
+
+    # SWAGGER CONF
+    SWAGGER_SUPPORTED_SUBMIT_METHODS = ["get"]
+    SWAGGER_UI_DOC_EXPANSION = "list"
+
+    # RESTPLUS CONF
+    RESTPLUS_MASK_SWAGGER = False
 
 
 class DevelopmentConfig(Config):
