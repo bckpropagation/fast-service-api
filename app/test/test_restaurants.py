@@ -47,8 +47,8 @@ class TestRestaurants(BaseTestCase):
 		self.assertEqual(response.status, "200 OK")
 
 		data = json.loads(response.data.decode())
-		self.assertEqual(data["id"], 1)
 		self.assertEqual(data["name"], "La Farola")
+		self.assertEqual(data["hours"], "09:00-18:00")
 	
 	def test_throw_error_on_not_found(self):
 		create_restaurants()

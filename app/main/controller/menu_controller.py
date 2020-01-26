@@ -2,6 +2,7 @@ import json
 
 from flask_restplus import Resource
 
+
 from ..utils.dto import MenuDto
 from app.main.service.menu_service import (
 	get_restaurant_menu,
@@ -34,33 +35,37 @@ parser.add_argument(
 @api.param("rest_id", "Restaurant id")
 class Menu(Resource):
 	@api.doc("Restaurant menu information")
-	@api.response(200, "Success", _menu)
-	@api.doc(
-		responses = {
-			204: "No menu",
-			404: "Menu not found"
-		}
-	)
-	@api.marshal_list_with(_dish)
 	@api.expect(parser)
 	def get(self, rest_id):
 		response = None
 		args = parser.parse_args()
 
 		if args.get("id"):
-			response = get_dish_information(
-				rest_id,
-				args.get("id")
-			)
+			return self.get_dish(rest_id, args.get("id"))
 		elif args.get("type"):
-			response = get_dishes_by_type(
-				rest_id,
-				args.get("type")
-			)
-		else:
-			response = get_restaurant_menu(rest_id)
+			return self.get_dish_by_type(rest_id, args.get("type"))
+		
+		return self.restaurant_menu(rest_id)
 
-		if response:
-			return response
+	@api.response(200, "Success", _dish)
+	@api.marshal_with(_dish)
+	def get_dish(self, rest_id, id):
+		return get_dish_information(rest_id, id)
+	
+	@api.doc(
+		"Query dishes by type",
+		responses = { 200: "Success" }
+	)
+	@api.marshal_list_with(_menu)
+	def get_dish_by_type(self, rest_id, type):
+		return get_dishes_by_type(rest_id, type)
 
-		return [], 204
+	@api.response(200, "Success", _menu)
+	@api.marshal_list_with(_menu)
+	def restaurant_menu(self, rest_id):
+		response = get_restaurant_menu(rest_id)
+
+		if not response:
+			api.abort(code=404, description="Restaurant does not has menu")
+
+		return response

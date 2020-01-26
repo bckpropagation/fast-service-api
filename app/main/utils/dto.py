@@ -40,29 +40,76 @@ class RestaurantsDto:
 		description="Information of registered restaurants."
 	)
 
-	min_model = {
-		"id": fields.Integer(
-			description="Restaurant id number"
-		),
-		"name": fields.String(
-			description="Restaurant name"
-		),
-		"hours": fields.String(
-			description="Restaurant work hours"
-		)
-	}
-
-	minified_restaurant = api.model(
-		"resturants",
-		min_model
-	)
-	
-	full_model = min_model
-	full_model["menus"] = fields.List(
-		fields.Nested(MenuDto.menu)
-	)
-
 	restaurant = api.model(
 		"restaurant",
-		full_model
+		{
+			"id": fields.Integer(
+				description="Restaurant id number"
+			),
+			"name": fields.String(
+				description="Restaurant name"
+			),
+			"hours": fields.String(
+				description="Restaurant work hours"
+			),
+			"menus": fields.List(
+				fields.Nested(MenuDto.menu)
+			)
+		}
+	)
+
+
+class AuthDto:
+	api = Namespace(
+		"auth",
+		description="Authentication information",
+		validate=True
+	)
+
+	auth = api.model(
+		"auth",
+		{
+			"email": fields.String(
+				required=True,
+				description="User email address"
+			),
+			"passwd": fields.String(
+				required=True,
+				description="User password"
+			)
+		}
+	)
+
+
+class UserDto:
+	api = Namespace(
+		"user",
+		description="User information"
+	)
+
+	user = api.model(
+		"user",
+		{
+			"public_id": fields.String(
+				description="User public id",
+				readonly=True
+			),
+			"first_name": fields.String(
+				required=True,
+				description="User first name"
+			),
+			"last_name": fields.String(
+				required=True,
+				description="User last name"
+			),
+			"email": fields.String(
+				required=True,
+				description="User email"
+			),
+			"passwd": fields.String(
+				required=True,
+				description="User password",
+				format="password"
+			)
+		}
 	)
