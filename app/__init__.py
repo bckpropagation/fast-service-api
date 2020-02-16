@@ -18,8 +18,17 @@ api = Api(
 	blueprint,
 	version="1.0",
 	title="Fast service API",
+<<<<<<< Updated upstream
 	description="Fast service API",
+<<<<<<< Updated upstream
 	doc="/api/doc"
+=======
+	catch_all_404s=True
+=======
+	description="Fast service API<style>.models {display: none !important}</style>",
+	doc="/api/doc"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 )
 
 
