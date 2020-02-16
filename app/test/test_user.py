@@ -20,7 +20,7 @@ def create_user() -> None:
 
 def register_new_user(self):
 	return self.client.post(
-		"/user",
+		"/api/v1/user",
 		data = json.dumps(
 			{
 				"first_name": "new",
@@ -38,7 +38,7 @@ class UserTest(BaseTestCase):
 	def test_get_user_by_public_id(self):
 		public_id = create_user()
 
-		response = self.client.get(f"/user/{public_id}")
+		response = self.client.get(f"/api/v1/user/{public_id}")
 
 		self.assertTrue(response.status_code == 200)
 
@@ -49,7 +49,7 @@ class UserTest(BaseTestCase):
 		self.assertFalse("passwd" in response.json)
 	
 	def test_get_error_on_non_existent_user_public_id(self):
-		response = self.client.get(f"/user/deadbeef")
+		response = self.client.get(f"/api/v1/user/deadbeef")
 		self.assertTrue(response.status_code == 404)
 
 	def test_create_new_user(self):

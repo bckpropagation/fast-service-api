@@ -15,7 +15,7 @@ def success_login(client):
 		"passwd": "test_password"
 	}
 	return client.post(
-		"/auth/login",
+		"/api/v1/auth/login",
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -27,7 +27,7 @@ def incorrect_login(client):
 		"passwd": "test_password"
 	}
 	return client.post(
-		"/auth/login",
+		"/api/v1/auth/login",
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -40,7 +40,7 @@ def erroneous_login(client):
 	}
 
 	return client.post(
-		"/auth/login",
+		"/api/v1/auth/login",
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -97,7 +97,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				headers={
 					"Authorization": f"Bearer {auth_token}"
 				},
@@ -122,7 +122,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -141,7 +141,7 @@ class AuthenticationTest(BaseTestCase):
 
 	def test_try_to_logout_using_a_different_user_id(self):
 		response = self.client.post(
-			"/user",
+			"/api/v1/user",
 			data = json.dumps(
 				{
 					"first_name": "new",
@@ -160,7 +160,7 @@ class AuthenticationTest(BaseTestCase):
 			user_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				content_type="application/json",
 				headers={
 					"Authorization": f"Bearer {auth_token}"
@@ -186,7 +186,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -209,7 +209,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -232,7 +232,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				"/api/v1/auth/logout",
 				data=json.dumps(
 					{
 						"user_id": user_public_id
