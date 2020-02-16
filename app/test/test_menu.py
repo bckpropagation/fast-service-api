@@ -8,7 +8,7 @@ from typing import List
 
 from app import __version__
 from app.main import db
-from app.test.base import BaseTestCase
+from app.test.base import BaseTestCase, ENDPOINTS
 from app.main.model.restaurant import Restaurant
 from app.main.model.menu import Menu
 
@@ -46,7 +46,7 @@ class TestMenu(BaseTestCase):
 
 	def test_retrieve_restaurants_minified_menu_information(self):
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/1")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/1")
 			
 			self.assertEqual(response.status_code, 200)
 
@@ -64,7 +64,7 @@ class TestMenu(BaseTestCase):
 
 	def test_retrieve_menus_from_one_restaurant(self):
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/1/menu")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu")
 
 			self.assertEqual(response.status, "200 OK")
 			
@@ -76,12 +76,12 @@ class TestMenu(BaseTestCase):
 	def test_return_error_on_empty_menu(self):
 		create_restaurants()
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/2/menu")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/2/menu")
 			self.assertEqual(response.status_code, 404)
 
 	def test_return_dish_information(self):
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/1/menu?id=1")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu?id=1")
 
 			self.assertEqual(response.status_code, 200)
 
@@ -92,14 +92,14 @@ class TestMenu(BaseTestCase):
 	
 	def test_get_dishes_by_type(self):
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/1/menu?type=lunch")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu?type=lunch")
 
 			self.assertEqual(response.status_code, 200)
 			self.assertIsNotNone(response.json)
 
 	def test_return_error_on_retrieving_non_existing_type(self):
 		with self.app.test_client() as client:
-			response = client.get("/api/v1/restaurants/1/menu?type=lun")
+			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu?type=lun")
 
 			self.assertEqual(response.status_code, 400)
 

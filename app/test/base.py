@@ -1,7 +1,16 @@
 from flask_testing import TestCase
 from manage import app
+
+from app import url_prefix
 from app.main import db
 
+
+ENDPOINTS = {
+	"user": f"{url_prefix}/user",
+	"login": f"{url_prefix}/auth/login",
+	"logout": f"{url_prefix}/auth/logout",
+	"restaurants": f"{url_prefix}/restaurants"
+}
 
 class BaseTestCase(TestCase):
 	def create_app(self):

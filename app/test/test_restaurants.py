@@ -6,18 +6,9 @@ import unittest
 
 from typing import List
 
-
-from app import __version__
 from app.main import db
-from app.test.base import BaseTestCase
+from app.test.base import BaseTestCase, ENDPOINTS
 from app.main.model.restaurant import Restaurant
-
-
-ENDPOINTS = {
-	"rests": f"/api/{__version__}/restaurants",
-	"single": f"/api/{__version__}/restaurants/1",
-	"not_found": f"/api/{__version__}/restaurants/9999999"
-}
 
 
 def create_restaurants() -> None:
@@ -31,7 +22,7 @@ class TestRestaurants(BaseTestCase):
 	def test_retrieve_restaurants(self):
 		create_restaurants()
 
-		response = self.client.get(ENDPOINTS["rests"])
+		response = self.client.get(ENDPOINTS.get("restaurants"))
 
 		self.assertEqual(response.status, "200 OK")
 
@@ -42,7 +33,7 @@ class TestRestaurants(BaseTestCase):
 	def test_retrieve_restaurant_by_id(self):
 		create_restaurants()
 
-		response = self.client.get(ENDPOINTS["single"])
+		response = self.client.get(f"{ENDPOINTS.get('restaurants')}/1")
 
 		self.assertEqual(response.status, "200 OK")
 
@@ -53,5 +44,5 @@ class TestRestaurants(BaseTestCase):
 	def test_throw_error_on_not_found(self):
 		create_restaurants()
 
-		response = self.client.get(ENDPOINTS["not_found"])
+		response = self.client.get(f"{ENDPOINTS.get('restaurants')}/9999999")
 		self.assertEqual(response.status, "404 NOT FOUND")

@@ -10,7 +10,7 @@ api = RestaurantsDto.api
 _restaurant = RestaurantsDto.restaurant
 
 
-@api.route("/restaurants")
+@api.route("")
 @api.response(204, "No restaurants")
 class RestaurantList(Resource):
 
@@ -20,7 +20,7 @@ class RestaurantList(Resource):
 		return get_all_restaurants()
 
 
-@api.route("/restaurants/<int:id>")
+@api.route("/<int:id>")
 @api.param("id", "Restaurant id number")
 class Restaurant(Resource):
 

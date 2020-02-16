@@ -5,7 +5,7 @@ import unittest
 
 from app import __version__
 from app.main import db
-from app.test.base import BaseTestCase
+from app.test.base import BaseTestCase, ENDPOINTS
 from app.main.model.user import User
 
 
@@ -20,7 +20,7 @@ def create_user() -> None:
 
 def register_new_user(self):
 	return self.client.post(
-		"/user",
+		ENDPOINTS.get("user"),
 		data = json.dumps(
 			{
 				"first_name": "new",
@@ -38,7 +38,7 @@ class UserTest(BaseTestCase):
 	def test_get_user_by_public_id(self):
 		public_id = create_user()
 
-		response = self.client.get(f"/user/{public_id}")
+		response = self.client.get(f"{ ENDPOINTS.get('user') }/{ public_id }")
 
 		self.assertTrue(response.status_code == 200)
 
@@ -49,7 +49,7 @@ class UserTest(BaseTestCase):
 		self.assertFalse("passwd" in response.json)
 	
 	def test_get_error_on_non_existent_user_public_id(self):
-		response = self.client.get(f"/user/deadbeef")
+		response = self.client.get(f"{ENDPOINTS.get('user')}/user/deadbeef")
 		self.assertTrue(response.status_code == 404)
 
 	def test_create_new_user(self):

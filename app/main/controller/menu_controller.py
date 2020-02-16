@@ -54,7 +54,9 @@ class Menu(Resource):
 	
 	@api.doc(
 		"Query dishes by type",
-		responses = { 200: "Success" }
+		responses = {
+			200: "Success"
+		}
 	)
 	@api.marshal_list_with(_menu)
 	def get_dish_by_type(self, rest_id, type):

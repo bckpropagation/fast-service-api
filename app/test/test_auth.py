@@ -3,7 +3,7 @@ import unittest
 
 
 from app.main import db
-from app.test.base import BaseTestCase
+from app.test.base import BaseTestCase, ENDPOINTS
 from app.main.model.user import User
 from app.main.model.blacklist import BlacklistToken
 from app.test.test_user import register_new_user
@@ -15,7 +15,7 @@ def success_login(client):
 		"passwd": "test_password"
 	}
 	return client.post(
-		"/auth/login",
+		ENDPOINTS.get("login"),
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -27,7 +27,7 @@ def incorrect_login(client):
 		"passwd": "test_password"
 	}
 	return client.post(
-		"/auth/login",
+		ENDPOINTS.get("login"),
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -40,7 +40,7 @@ def erroneous_login(client):
 	}
 
 	return client.post(
-		"/auth/login",
+		ENDPOINTS.get("login"),
 		data=json.dumps(user_data),
 		content_type="application/json"
 	)
@@ -97,7 +97,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				headers={
 					"Authorization": f"Bearer {auth_token}"
 				},
@@ -122,7 +122,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -141,7 +141,7 @@ class AuthenticationTest(BaseTestCase):
 
 	def test_try_to_logout_using_a_different_user_id(self):
 		response = self.client.post(
-			"/user",
+			ENDPOINTS.get("user"),
 			data = json.dumps(
 				{
 					"first_name": "new",
@@ -160,7 +160,7 @@ class AuthenticationTest(BaseTestCase):
 			user_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				content_type="application/json",
 				headers={
 					"Authorization": f"Bearer {auth_token}"
@@ -186,7 +186,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -209,7 +209,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				data=json.dumps(
 					{
 						"user_id": user_public_id
@@ -232,7 +232,7 @@ class AuthenticationTest(BaseTestCase):
 			user_public_id = User.decode_auth_token(auth_token)
 
 			response = client.post(
-				"/auth/logout",
+				ENDPOINTS.get("logout"),
 				data=json.dumps(
 					{
 						"user_id": user_public_id
