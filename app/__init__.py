@@ -20,5 +20,5 @@ api = Api(
 
 api.add_namespace(restaurants_ns, path=f"/api/{__version__}")
 api.add_namespace(menu_ns, path=f"/api/{__version__}/restaurants")
-api.add_namespace(user_ns, path="/user")
-api.add_namespace(auth_ns)
+api.add_namespace(user_ns, path=f"/api/{__version__}/user")
+api.add_namespace(auth_ns, path=f"/api/{__version__}/auth")
