@@ -45,10 +45,7 @@ class UserTest(BaseTestCase):
 		self.assertEqual(public_id, response.json.get("public_id"))
 		self.assertEqual("test", response.json.get("first_name"))
 		self.assertEqual("user", response.json.get("last_name"))
-<<<<<<< Updated upstream
-		self.assertEqual("test@example.com", response.json.get("email"))
-=======
->>>>>>> Stashed changes
+
 		self.assertFalse("passwd" in response.json)
 	
 	def test_get_error_on_non_existent_user_public_id(self):

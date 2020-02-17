@@ -11,10 +11,7 @@ from ..service.auth_service import Auth
 
 api = AuthDto.api
 _auth = AuthDto.auth
-<<<<<<< Updated upstream
-=======
 _login_resp = AuthDto.login_resp
->>>>>>> Stashed changes
 
 
 @api.route("/login")
@@ -30,15 +27,12 @@ class UserLogin(Resource):
 
 	@api.doc("Login service")
 	@api.expect(_auth, validate=True)
-<<<<<<< Updated upstream
-	def post(self):
-=======
 	@api.response(200, "Success", _login_resp)
 	def post(self):
 		"""
 		Logs in a registered user.
 		"""
->>>>>>> Stashed changes
+
 		response = Auth.login(**api.payload)
 		return response
 
@@ -59,6 +53,7 @@ parser.add_argument(
 	help="Public user id",
 	nullable=False
 )
+
 
 @api.route("/logout")
 class UserLogout(Resource):

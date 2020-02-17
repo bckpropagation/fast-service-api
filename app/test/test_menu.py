@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import unittest
 
 
@@ -31,22 +32,10 @@ def create_menus() -> List[Menu]:
 
 	return [
 		Menu(
-<<<<<<< Updated upstream
-			f"Menu {_type}",
-			_type,
-			f"Desc {_type}"
-=======
-<<<<<<< Updated upstream
-			f"Menu No {random.random()}",
-			random.choice(TYPES),
-			f"Desc {random.random()}"
-=======
 			f"Menu {_type}",
 			_type,
 			f"Desc {_type}",
 			random.randrange(10, 300)
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 		)
 		for _type in TYPES
 	]
@@ -93,17 +82,15 @@ class TestMenu(BaseTestCase):
 			self.assertEqual(response.status_code, 404)
 
 	def test_return_dish_information(self):
-<<<<<<< Updated upstream
+
 		with self.app.test_client() as client:
 			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu?id=1")
-=======
-<<<<<<< Updated upstream
+
 		response = self.client.get("/api/v1/restaurants/1/menu?id=1")
-=======
 		with self.app.test_client() as client:
 			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu/1")
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
+
 
 			self.assertEqual(response.status_code, 200)
 

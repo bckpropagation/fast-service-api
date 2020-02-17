@@ -78,7 +78,6 @@ class AuthDto:
 		description="Authentication information",
 		validate=True
 	)
-<<<<<<< Updated upstream
 
 	auth = api.model(
 		"auth",
@@ -93,33 +92,6 @@ class AuthDto:
 			)
 		}
 	)
-
-
-class UserDto:
-	api = Namespace(
-		"user",
-		description="User information"
-	)
-
-	user = api.model(
-		"user",
-		{
-			"public_id": fields.String(
-				description="User public id",
-				readonly=True
-			),
-=======
-<<<<<<< Updated upstream
-	
-	full_model = min_model
-	full_model["menus"] = fields.List(
-		fields.Nested(MenuDto.menu)
-	)
-
-	restaurant = api.model(
-		"restaurant",
-		full_model
-=======
 
 	login_resp = GenericResponse.resp.copy()
 	login_resp["Authorization"] = fields.String(
@@ -141,7 +113,6 @@ class UserDto:
 	__user_base_model = api.model(
 		"Base",
 		{
->>>>>>> Stashed changes
 			"first_name": fields.String(
 				required=True,
 				description="User first name"
@@ -149,10 +120,7 @@ class UserDto:
 			"last_name": fields.String(
 				required=True,
 				description="User last name"
-<<<<<<< Updated upstream
 			),
-=======
-			)
 		}
 	)
 
@@ -171,7 +139,6 @@ class UserDto:
 		"new_user",
 		__user_base_model,
 		{
->>>>>>> Stashed changes
 			"email": fields.String(
 				required=True,
 				description="User email"
@@ -179,15 +146,9 @@ class UserDto:
 			"passwd": fields.String(
 				required=True,
 				description="User password",
-<<<<<<< Updated upstream
 				format="password"
 			)
 		}
-=======
-				format="password",
-			)
-		}
->>>>>>> Stashed changes
 	)
 
 	fail_resp = api.model(
@@ -203,5 +164,4 @@ class UserDto:
 	login_resp = api.model(
 		"auth_resp",
 		login_resp
->>>>>>> Stashed changes
 	)
