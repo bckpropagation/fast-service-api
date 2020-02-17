@@ -16,25 +16,33 @@ api = MenuDto.api
 _menu = MenuDto.menu
 _dish = MenuDto.dish
 
-parser = api.parser()
-parser.add_argument(
-	"type",
-	type=str,
-	location="args",
-	choices=["lunch", "breakfast", "dinner", "vegan"],
-	help="Dish types"
-)
-
 
 @api.route("/<int:rest_id>/menu")
 @api.param("rest_id", "Restaurant id")
 class Menu(Resource):
-	@api.doc("Restaurant menu information")
-	@api.response(200, "Success", _menu)
+	parser = api.parser()
+	parser.add_argument(
+		"type",
+		type=str,
+		location="args",
+		choices=["lunch", "breakfast", "dinner", "vegan"],
+		help="Valid menu choices"
+	)
+
+	@api.doc(
+		"Restaurant menu information",
+		responses={
+			200: ("Success", _menu),
+			404: "Not found"
+		}
+	)
 	@api.marshal_list_with(_menu)
 	@api.expect(parser)
 	def get(self, rest_id):
-		args = parser.parse_args()
+		"""
+		Returns the whole restaurant menu or filtered by type.
+		"""
+		args = self.parser.parse_args()
 
 		if args.get("type"):
 			return self.get_dish_by_type(rest_id, args.get("type"))
@@ -54,7 +62,7 @@ class Menu(Resource):
 		response = get_restaurant_menu(rest_id)
 
 		if not response:
-			api.abort(code=404, description="Restaurant does not has menu")
+			api.abort(code=404, status="fail", description="Restaurant does not has menu")
 
 		return response
 
@@ -63,7 +71,13 @@ class Menu(Resource):
 @api.param("rest_id", "Restaurant id")
 @api.param("dish_id", "Dish Id")
 class Dish(Resource):
-
+	@api.doc(
+		"Dish information",
+		responses={
+			200: ("Success", _dish),
+			404: ("Not found")
+		}
+	)
 	@api.marshal_with(_dish, code=200)
 	def get(self, rest_id, dish_id):
 		"""

@@ -12,6 +12,7 @@ class GenericResponse:
 		description="Operation description"
 	)
 
+
 class MenuDto:
 	api = Namespace(
 		"menu",
@@ -46,6 +47,11 @@ class MenuDto:
 		}
 	)
 
+	general_resp = api.model(
+		"g",
+		GenericResponse.resp.copy()
+	)
+
 
 class RestaurantsDto:
 	api = Namespace(
@@ -71,6 +77,11 @@ class RestaurantsDto:
 		}
 	)
 
+	general_resp = api.model(
+		"g",
+		GenericResponse.resp.copy()
+	)
+
 
 class AuthDto:
 	api = Namespace(
@@ -91,6 +102,11 @@ class AuthDto:
 				description="User password"
 			)
 		}
+	)
+
+	general_resp = api.model(
+		"g",
+		GenericResponse.resp.copy()
 	)
 
 	login_resp = GenericResponse.resp.copy()

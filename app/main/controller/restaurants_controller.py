@@ -8,15 +8,24 @@ from app.main.service.restaurants_service import get_all_restaurants, get_restau
 
 api = RestaurantsDto.api
 _restaurant = RestaurantsDto.restaurant
+_resp = RestaurantsDto.general_resp
 
 
 @api.route("")
-@api.response(204, "No restaurants")
 class RestaurantList(Resource):
 
-	@api.doc("Information of registered restaurants.")
-	@api.marshal_list_with(_restaurant, mask="id, name, hours")
+	@api.doc(
+		"Information of registered restaurants.",
+		responses={
+			200: ("Success", _restaurant),
+			204: ("NO CONTENT")
+		}
+	)
+	@api.marshal_list_with(_restaurant, code=200, mask="id, name, hours")
 	def get(self):
+		"""
+		Returns a list of all registered restaurants.
+		"""
 		return get_all_restaurants()
 
 
@@ -24,8 +33,16 @@ class RestaurantList(Resource):
 @api.param("id", "Restaurant id number")
 class Restaurant(Resource):
 
-	@api.doc("Retrieve restaurant by id")
-	@api.response(404, "Restaurant not found")
+	@api.doc(
+		"Retrieve restaurant by id",
+		responses={
+			200: ("Success", _restaurant),
+			404: ("Restaurant not found")
+		}
+	)
 	@api.marshal_with(_restaurant)
 	def get(self, id):
+		"""
+		Retrieve restaurant by it's id
+		"""
 		return get_restaurant_by_id(id)

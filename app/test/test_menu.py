@@ -84,13 +84,7 @@ class TestMenu(BaseTestCase):
 	def test_return_dish_information(self):
 
 		with self.app.test_client() as client:
-			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu?id=1")
-
-		response = self.client.get("/api/v1/restaurants/1/menu?id=1")
-		with self.app.test_client() as client:
 			response = client.get(f"{ENDPOINTS.get('restaurants')}/1/menu/1")
-
-
 
 			self.assertEqual(response.status_code, 200)
 
@@ -116,7 +110,7 @@ class TestMenu(BaseTestCase):
 			self.assertIsNotNone(errors)
 			self.assertEqual(
 				errors.get("type"),
-				"Dish types The value 'lun' is not a valid choice for 'type'."
+				"Valid menu choices The value 'lun' is not a valid choice for 'type'."
 			)
 
 if __name__ == "__main__":

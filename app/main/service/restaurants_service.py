@@ -4,6 +4,10 @@ from app.main.model.restaurant import Restaurant
 
 def get_all_restaurants():
 	result = Restaurant.query.all()
+
+	if not result:
+		result = {}, 204
+
 	return result
 
 
