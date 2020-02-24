@@ -13,6 +13,9 @@
 - Run server (Flask):
 	```
 	$ flask run -h 0.0.0.0 -p 5000 --with-threads
+  $ export APP_SETTINGS="[dev, test or prod]"
+	$ export FLASK_ENV=$APP_SETTINGS
+	$ export DATABASE_URL="postgresql://[db_host]:[db_port]/db_name"
 	```
 
 - Run server (Manage):
@@ -56,4 +59,5 @@
 - Run server (Gunicorn):
 	```
 	$ gunicorn -w 4 -b [host]:[port] "$FLASK_APP"
+	$ python manage.py run
 	```
